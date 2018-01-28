@@ -1,0 +1,7 @@
+<%=
+  lines = JSON.parse(@map).map do |key, value|
+    "#{key} [#{value}]"
+  end
+
+  lines.join("\n")
+%>
