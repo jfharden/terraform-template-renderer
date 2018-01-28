@@ -1,0 +1,7 @@
+<%=
+  lines = JSON.parse(@instances).map.with_index do |instance_id, index|
+    "#{index} [#{instance_id}]"
+  end
+
+  lines.join("\n")
+%>
