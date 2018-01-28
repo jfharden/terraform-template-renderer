@@ -1,0 +1,7 @@
+<%=
+  lines = JSON.parse(@list).map.with_index do |item, index|
+    "KEY#{index} [#{item}]"
+  end
+
+  lines.join("\n")
+%>
