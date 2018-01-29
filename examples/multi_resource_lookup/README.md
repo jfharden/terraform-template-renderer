@@ -7,7 +7,7 @@ and then uncomment `multi_resource_lookup.tf`
 ## COSTS!
 
 Be warned, this example will cost money to perform, it requires starting up 2 t2.nano instances. You are solely
-responsible for any resources.
+responsible for any resources created or costs incurred.
 
 I strongly recommend running `terraform destroy` once you have finished running the test to remove all the resources
 that the test created.
