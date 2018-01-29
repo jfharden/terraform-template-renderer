@@ -22,3 +22,7 @@ The purpose for this strange behaviour is to be a [terraform external
 provider](https://www.terraform.io/docs/providers/external/data_source.html) to render arbitrarily complex templates,
 terraform passes in the variables to render as a json blob to stdin as described above and expects a json blob
 back.
+
+## ERB Template notes
+
+Trim mode is enabled and the trim character is a hyphen `-`.
