@@ -8,7 +8,6 @@ data "external" "multi_resource_lookup" {
   program = ["bundle", "exec", "render-template", "multi_resource_lookup.erb"]
 
   query {
-    count = "${data.aws_instances.multi_resource_lookup.ids.length}"
     instances = "${jsonencode(data.aws_instances.multi_resource_lookup.ids)}"
   }
 }
