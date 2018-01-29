@@ -1,0 +1,1 @@
+gem "terraform-template-renderer", path: "../"

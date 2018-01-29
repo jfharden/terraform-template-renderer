@@ -4,6 +4,7 @@ Features:
 
  - Enabled trim mode for ERB templates using a hyphen (e.g. `<%- code -%>` will remove preceeding indentation and a
    following newline).
+ - Example directory giving real usage examples in terraform.
 
 ## 0.1.0 (2018-01-28)
 
