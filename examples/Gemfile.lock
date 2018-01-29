@@ -1,13 +1,17 @@
+PATH
+  remote: ..
+  specs:
+    terraform-template-renderer (0.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
-    terraform-template-renderer (0.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  terraform-template-renderer
+  terraform-template-renderer!
 
 BUNDLED WITH
    1.16.1

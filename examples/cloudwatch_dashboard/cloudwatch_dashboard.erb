@@ -1,0 +1,136 @@
+<%
+  def instances_by_name_list_for(statistic)
+    rows = JSON.parse(@instances_by_name).map do |instance|
+      row = ["AWS/EC2", statistic, "InstanceId", instance["id"], { label: instance["name"] }]
+      JSON.dump(row)
+    end
+    rows.join(",")
+  end
+
+  def instances_by_id_list_for(statistic)
+    rows = JSON.parse(@instances_by_id).map do |instance|
+      row = ["AWS/EC2", statistic, "InstanceId", instance]
+      JSON.dump(row)
+    end
+    rows.join(",")
+  end
+
+-%>
+{
+  "widgets": [
+    {
+      "type": "text",
+      "x": 0,
+      "y": 0,
+      "width": 24,
+      "height": 1,
+      "properties": {
+        "markdown": "## Instances"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 1,
+      "width": 12,
+      "height": 5,
+      "properties": {
+        "metrics": [<%=instances_by_name_list_for("NetworkIn")%>],
+        "period": 300,
+        "stat": "Maximum",
+        "region": "eu-west-1",
+        "title": "Network In"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 1,
+      "width": 12,
+      "height": 5,
+      "properties": {
+        "metrics": [<%=instances_by_name_list_for("NetworkOut")%>],
+        "period": 300,
+        "stat": "Maximum",
+        "region": "eu-west-1",
+        "title": "Network Out"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 6,
+      "width": 24,
+      "height": 5,
+      "properties": {
+        "metrics": [<%=instances_by_id_list_for("CPUUtilization")%>],
+        "period": 300,
+        "stat": "Maximum",
+        "region": "eu-west-1",
+        "title": "EC2 Instance CPU"
+      }
+    },
+    {
+      "type": "text",
+      "x": 0,
+      "y": 11,
+      "width": 24,
+      "height": 1,
+      "properties": {
+        "markdown": "## ELB"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 12,
+      "width": 8,
+      "height": 5,
+      "properties": {
+        "metrics": [
+          [ "AWS/ELB", "HealthyHostCount", "LoadBalancerName", "<%=@elb_name%>" ],
+          [ "AWS/ELB", "UnHealthyHostCount", "LoadBalancerName", "<%=@elb_name%>" ]
+        ],
+        "period": 300,
+        "stat": "Maximum",
+        "region": "eu-west-1",
+        "title": "Host Health"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 8,
+      "y": 12,
+      "width": 8,
+      "height": 5,
+      "properties": {
+        "metrics": [
+          [ "AWS/ELB", "RequestCount", "LoadBalancerName", "<%=@elb_name%>" ]
+        ],
+        "period": 300,
+        "stat": "Maximum",
+        "region": "eu-west-1",
+        "title": "Request Latency"
+      }
+    },
+    {
+      "type": "metric",
+      "x": 16,
+      "y": 12,
+      "width": 8,
+      "height": 5,
+      "properties": {
+        "metrics": [
+          [ "AWS/ELB", "HTTPCode_Backend_2XX", "LoadBalancerName", "<%=@elb_name%>", { "label": "2xx responses" } ],
+          [ "AWS/ELB", "HTTPCode_Backend_3XX", "LoadBalancerName", "<%=@elb_name%>", { "label": "3xx responses" } ],
+          [ "AWS/ELB", "HTTPCode_Backend_4XX", "LoadBalancerName", "<%=@elb_name%>", { "label": "4xx responses" } ],
+          [ "AWS/ELB", "HTTPCode_Backend_5XX", "LoadBalancerName", "<%=@elb_name%>", { "label": "5xx responses" } ]
+        ],
+        "period": 300,
+        "stat": "Maximum",
+        "region": "eu-west-1",
+        "title": "Request Latency"
+      }
+    }
+  ]
+}

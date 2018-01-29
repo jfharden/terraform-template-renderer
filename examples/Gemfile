@@ -1,3 +1,1 @@
-source "https://rubygems.org"
-
-gem "terraform-template-renderer"
+gem "terraform-template-renderer", path: "../"
