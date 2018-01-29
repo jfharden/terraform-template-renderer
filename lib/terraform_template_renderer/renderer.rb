@@ -4,7 +4,8 @@ require "json"
 module TerraformTemplateRenderer
   class Renderer
     def initialize(template)
-      @erb_template = ERB.new(template)
+      # The third argument enables trim mode using a hyphen
+      @erb_template = ERB.new(template, nil, "-")
     end
 
     # The passed in json_variables needs to be a JSON object (not array), all the keys will be used

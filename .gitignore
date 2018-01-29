@@ -10,6 +10,10 @@
 # rspec failure tracking
 .rspec_status
 
-Gemfile.lock
+/Gemfile.lock
 
 .ruby-version
+
+examples/*/.terraform/
+examples/*/terraform.tfstate*
+examples/*/sample_output

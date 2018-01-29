@@ -22,3 +22,22 @@ The purpose for this strange behaviour is to be a [terraform external
 provider](https://www.terraform.io/docs/providers/external/data_source.html) to render arbitrarily complex templates,
 terraform passes in the variables to render as a json blob to stdin as described above and expects a json blob
 back.
+
+## ERB Template notes
+
+Trim mode is enabled and the trim character is a hyphen `-`.
+
+## Examples
+
+There are a number of examples in the examples folder. To run these examples you will need terraform 0.11, you can run
+the example as follows:
+
+    cd examples/simple_strings
+    terraform init
+    terraform apply
+
+In each example there is an erb template and a terraform file, applying the terraform code will produce a file called
+`example_output`.
+
+___WARNING___: Some of the examples incur AWS costs, _ALWAYS_ remember to `terraform destroy` after you have finished
+running the example. You are solely responsible for any AWS costs incurred running these examples.

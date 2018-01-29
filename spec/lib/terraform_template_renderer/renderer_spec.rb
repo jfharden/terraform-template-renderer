@@ -31,5 +31,13 @@ RSpec.describe TerraformTemplateRenderer::Renderer do
       subject.render(json_variables)
       expect(subject.render(json_variables_2)).to eq(rendered_template_2)
     end
+
+    context "with extra whitespace in the template" do
+      let(:template) { "    <%- -%>\nvar thing = '<%= @mykey1 %>'; var other = '<%= @mykey2 -%>\n'" }
+
+      it "allows trimming whitespace with a hypen" do
+        expect(subject.render(json_variables)).to eq(rendered_template)
+      end
+    end
   end
 end
