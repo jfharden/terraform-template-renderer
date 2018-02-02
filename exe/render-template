@@ -24,7 +24,7 @@ if ["-h", "--help", "-help", "help"].include?(template_path)
   exit 0
 end
 
-unless File.exist?(template_path)
+unless File.file?(template_path)
   STDERR.puts "ERB Template #{template_path} does not exist"
   exit 2
 end
@@ -32,7 +32,7 @@ end
 template = File.read(template_path)
 json_params = STDIN.read
 
-renderer = TerraformTemplateRenderer::Renderer.new(template)
+renderer = TerraformTemplateRenderer::Renderer.new(template, File.dirname(template_path))
 rendered_template = renderer.render(json_params)
 json_output = { rendered: rendered_template }.to_json
 puts json_output

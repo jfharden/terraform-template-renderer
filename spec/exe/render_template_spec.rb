@@ -50,7 +50,21 @@ RSpec.describe "Executing template-render executable", type: :aruba do
     end
   end
 
+  shared_examples :it_successfully_renders do
+    it "renders the template to stdout, nothing to stderr and exits successfully" do
+      expect(last_command_stopped.stderr).to eq("")
+      expect(last_command_stopped.stdout).to eq(File.read(rendered_path))
+      expect(last_command_stopped.exit_status).to eq(0)
+    end
+  end
+
   context "Successful run" do
+    before(:example) do
+      run("#{executable} #{template_path}")
+      last_command_started.stdin.write(json)
+      last_command_started.stdin.close
+    end
+
     context "with a simple template" do
       let(:template_path) { File.join(fixture_path, "simple_template.erb") }
       let(:rendered_path) { File.join(fixture_path, "simple_template.rendered") }
@@ -62,17 +76,22 @@ RSpec.describe "Executing template-render executable", type: :aruba do
         }.to_json
       end
 
-      before(:example) do
-        run("#{executable} #{template_path}")
-        last_command_started.stdin.write(json)
-        last_command_started.stdin.close
+      it_behaves_like :it_successfully_renders
+    end
+
+    context "with a template that includes partials" do
+      let(:template_path) { File.join(fixture_path, "template_with_partial.erb") }
+      let(:rendered_path) { File.join(fixture_path, "template_with_partial.rendered") }
+
+      let(:json) do
+        {
+          mykey1: "my_value1",
+          mykey2: "my_value2",
+          partialkey: "bar"
+        }.to_json
       end
 
-      it "renders the template to stdout, nothing to stderr and exits successfully" do
-        expect(last_command_stopped.stdout).to eq(File.read(rendered_path))
-        expect(last_command_stopped.stderr).to eq("")
-        expect(last_command_stopped.exit_status).to eq(0)
-      end
+      it_behaves_like :it_successfully_renders
     end
   end
 end
