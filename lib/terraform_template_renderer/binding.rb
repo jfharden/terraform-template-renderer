@@ -1,4 +1,10 @@
+# frozen_string_literal: true
+
 module TerraformTemplateRenderer
+  # Provides a Binding context which we can add arbitrary params to (which will become instance
+  # variables for the templates when they get rendered). Also provides a method to render
+  # partial templates which will pass through itself as the binding context for the partial
+  # template
   class Binding
     def initialize(template_path)
       @template_path = template_path

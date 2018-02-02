@@ -1,15 +1,17 @@
 #!/usr/bin/env ruby
 
+# frozen_string_literal: true
+
 require "bundler/setup"
 require "json"
 require_relative "../lib/terraform_template_renderer"
 
 def help
-  puts <<~EOF
+  puts <<~HELP
     Usage: render-template <path_to_erb_template>
 
     Reads json blob with params from STDIN
-  EOF
+  HELP
 end
 
 if ARGV.empty?

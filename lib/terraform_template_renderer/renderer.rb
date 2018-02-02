@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 require "erb"
 require "json"
 
 module TerraformTemplateRenderer
+  # Renderer to remder an ERB template with variables taken from a json string instead of
+  # from the original binding
   class Renderer
     def initialize(template, template_path)
       # The third argument enables trim mode using a hyphen
@@ -23,7 +27,7 @@ module TerraformTemplateRenderer
     private
 
     def template_binding(json_variables)
-      Binding.new(@template_path).tap do|binding_object|
+      Binding.new(@template_path).tap do |binding_object|
         add_params_to_object(binding_object, JSON.parse(json_variables))
       end
     end
