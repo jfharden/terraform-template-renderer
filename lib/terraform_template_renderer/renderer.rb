@@ -23,7 +23,9 @@ module TerraformTemplateRenderer
     private
 
     def template_binding(json_variables)
-      Binding.new(@template_path).tap { |binding_object| add_params_to_object(binding_object, JSON.parse(json_variables)) }
+      Binding.new(@template_path).tap do|binding_object|
+        add_params_to_object(binding_object, JSON.parse(json_variables))
+      end
     end
 
     def add_params_to_object(object, params)
