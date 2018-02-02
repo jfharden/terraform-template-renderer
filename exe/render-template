@@ -1,15 +1,17 @@
 #!/usr/bin/env ruby
 
+# frozen_string_literal: true
+
 require "bundler/setup"
 require "json"
 require_relative "../lib/terraform_template_renderer"
 
 def help
-  puts <<~EOF
+  puts <<~HELP
     Usage: render-template <path_to_erb_template>
 
     Reads json blob with params from STDIN
-  EOF
+  HELP
 end
 
 if ARGV.empty?
@@ -24,7 +26,7 @@ if ["-h", "--help", "-help", "help"].include?(template_path)
   exit 0
 end
 
-unless File.exist?(template_path)
+unless File.file?(template_path)
   STDERR.puts "ERB Template #{template_path} does not exist"
   exit 2
 end
@@ -32,7 +34,7 @@ end
 template = File.read(template_path)
 json_params = STDIN.read
 
-renderer = TerraformTemplateRenderer::Renderer.new(template)
+renderer = TerraformTemplateRenderer::Renderer.new(template, File.dirname(template_path))
 rendered_template = renderer.render(json_params)
 json_output = { rendered: rendered_template }.to_json
 puts json_output

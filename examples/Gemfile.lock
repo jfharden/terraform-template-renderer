@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    terraform-template-renderer (0.2.0)
+    terraform-template-renderer (0.3.0)
 
 GEM
   remote: https://rubygems.org/

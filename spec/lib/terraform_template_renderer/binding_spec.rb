@@ -1,7 +1,8 @@
 require "spec_helper"
 
 RSpec.describe TerraformTemplateRenderer::Binding do
-  subject(:binding) { described_class.new }
+  subject(:binding) { described_class.new(template_path) }
+  let(:template_path) { "spec/fixtures" }
   let(:key) { "my_key" }
   let(:value) { "my_value" }
 
@@ -28,6 +29,15 @@ RSpec.describe TerraformTemplateRenderer::Binding do
 
       expect { binding1.instance_variable_set("@test_variable", "test_value_after_1") }.
         not_to change { binding2.instance_variable_get("@test_variable") }.from("test_value_before_2")
+    end
+  end
+
+  describe "#render" do
+    let(:rendered) { File.read("spec/fixtures/partial.rendered") }
+
+    it "creates a renderer with the expected template" do
+      binding.add_param("partialkey", "bar")
+      expect(binding.render("partial.erb")).to eq(rendered)
     end
   end
 end
