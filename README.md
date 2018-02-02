@@ -23,6 +23,27 @@ provider](https://www.terraform.io/docs/providers/external/data_source.html) to 
 terraform passes in the variables to render as a json blob to stdin as described above and expects a json blob
 back.
 
+## Rendering Partials
+
+Inside any template you can render a partial template by calling the render method.
+
+For example if you have a partial template in filepath `partials/partial.erb`:
+
+    This is a partial, Hello <%= name %>
+
+And your template is
+
+    My favourite colour is <%= colour %>
+    <%= render 'partials/partial.erb' %>
+
+And you execute the command as
+
+    echo '{ "colour": "purple", "name": "Jonathan" }' | template_renderer path_to_my_template
+
+You will produce
+
+    { "rendered": "My favourite colour is purple\nThis is a partial, Hello Jonathan\n" }
+
 ## ERB Template notes
 
 Trim mode is enabled and the trim character is a hyphen `-`.

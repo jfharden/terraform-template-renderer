@@ -1,3 +1,9 @@
+## 0.3.0 (2018-02-02)
+
+Features:
+
+ - Partials can now be rendered by calling `render 'path/to/partial.erb'` in the template.
+
 ## 0.2.0 (2018-01-29)
 
 Features:
